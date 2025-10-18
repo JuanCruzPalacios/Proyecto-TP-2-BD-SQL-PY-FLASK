@@ -1,5 +1,56 @@
 import pymysql
 
+def mysqlconnect():
+    # Para conectar con la base de datos
+    try:
+        conn = pymysql.connect(
+            host='localhost',
+            user='root',
+            password = "admin",
+            db='boxsa',
+            )
+    except pymysql.MySQLError as e:
+        print("Error de conexion", e)
+        return
+    
+    cur = conn.cursor()
+    
+    ElegirProducto(cur, 1)
+
+    # Cerrar conexion
+    conn.close()
+
+def ValidarProducto(cur , idCliente, idProducto):
+    cur.execute("SELECT * from productos where idCliente = %s and idProducto = %s", (idCliente, idProducto))
+    output = cur.fetchall()
+    if len(output) > 0:
+        return True
+    else:
+        return False
+
+def ElegirProducto(cur , idCliente):
+    cur.execute("SELECT idProducto, ProdDetalle from productos where idCliente = %s", (idCliente,))
+    output = cur.fetchall()
+    print("Productos existentes:")
+    print("")
+    for i in output:
+        print("ID Producto:", i[0], " | Detalle:", i[1])
+
+    print ("")
+    idProducto = input("Seleccione un producto ingresando su ID: ")
+
+    while ValidarProducto(cur, idCliente, idProducto) == False:
+        print("El ID de producto ingresado no es valido. Intente nuevamente.")
+        idProducto = input("Seleccione un producto ingresando su ID: ")
+
+    print("Producto seleccionado correctamente.")
+    print("Informacion del producto detallada: ")
+    cur.execute("SELECT * from productos where idProducto = %s", (idProducto,))
+    output = cur.fetchall()
+    # Formatear la informacion de producto para que sea visible para el usuario
+    print("ID: " , output[0][0] , ", Detalle: " , output[0][2] , ", Costo: " , output[0][4] , ", Margen: " , output[0][5] , ", Precio unitario: " , output[0][6] , ", Estado: " , output[0][7] , ", Fecha de alta: " , output[0][8])
+    return idProducto
+
 def menu(cur):
     entrada = False
     while entrada == False:
@@ -11,7 +62,7 @@ def menu(cur):
             entrada = True
         else:
             print("Ingreso invalido, intente nuevamente")
-    
+
 
 def puedoProducir(cur):
     validado = False
@@ -34,40 +85,7 @@ def puedoProducir(cur):
         print("No se puede producir")
     
 
-def mysqlconnect():
-    # Para conectar con la base de datos
-    try:
-        conn = pymysql.connect(
-            host='localhost',
-            user='root',
-            password = "admin",
-            db='boxsa',
-            )
-    except pymysql.MySQLError as e:
-        print("Error de conexion", e)
-        return
-    
-    cur = conn.cursor()
-    
-    # Select query
-    cur.execute("select * from clientes")
-    output = cur.fetchall()
-    
-    for i in output:
-        print(i)
-    
-    menu(cur)
-
-
-
-
-    # Cerrar conexion
-    conn.close()
-    
 
 # Codigo principal
 if __name__ == "__main__" :
     mysqlconnect()
-
-
-
