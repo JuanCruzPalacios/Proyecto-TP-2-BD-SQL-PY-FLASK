@@ -51,7 +51,7 @@ def ElegirProducto(cur , idCliente):
     print("ID: " , output[0][0] , ", Detalle: " , output[0][2] , ", Costo: " , output[0][4] , ", Margen: " , output[0][5] , ", Precio unitario: " , output[0][6] , ", Estado: " , output[0][7] , ", Fecha de alta: " , output[0][8])
     return idProducto
 
-def menu(cur):
+def IngresarCliente(cur):
     entrada = False
     while entrada == False:
         nombre = input("Ingrese el nombre del cliente: ")
