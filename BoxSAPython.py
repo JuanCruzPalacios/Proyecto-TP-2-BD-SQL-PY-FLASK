@@ -63,9 +63,21 @@ def ElegirProducto(cur , idCliente):
             output = cur.fetchall()
             # Formatear la informacion de producto para que sea visible para el usuario
             print("ID: " , output[0][0] , ", Detalle: " , output[0][2] , ", Costo: " , output[0][4] , ", Margen: " , output[0][5] , ", Precio unitario: " , output[0][6] , ", Estado: " , output[0][7] , ", Fecha de alta: " , output[0][8])
-            Cantidad = input("Ingrese la cantidad que desea producir de este producto: ")
+            while True:
+                try:
+                    Cantidad = int(input("Ingrese la cantidad a producir: "))
+                    if Cantidad > 0:
+                        break
+                    else:
+                        print("La cantidad debe ser un numero positivo. Intente nuevamente.")
+                except ValueError:
+                    print("Entrada invalida. Ingrese un numero entero positivo.")
+                    
             listaProductos.append([idProducto , Cantidad])
-            print("Productos seleccionados: ", listaProductos)
+            print("Productos seleccionados: " , end="")
+            for p in listaProductos:
+                print(p[0] , end=" ")
+            print("")
             input("Presione Enter para continuar...")
     return listaProductos
 
