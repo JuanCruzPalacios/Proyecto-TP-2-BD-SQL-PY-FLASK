@@ -82,8 +82,7 @@ def IngresarCliente(cur):
         else:
             print("Ingreso invalido, intente nuevamente")
 
-
-def puedoProducir(cursor):
+def PuedoProducir(cursor):
     id_producto = (input("Ingrese el ID del producto a verificar: "))
     cantidad = int(input("Ingrese la cantidad a verificar: "))
     cursor.callproc("Check_Stock_Producto_2",(id_producto, cantidad))
@@ -93,43 +92,7 @@ def puedoProducir(cursor):
         if stock == "S":
             print("Se puede producir el producto solicitado.")
         else:
-            print("Ingreso invalido, intente nuevamente")
-    if output >= cant:
-        print("Se puede producir, sobrando ", (output - cant))
-    else:
-        print("No se puede producir")
-    
-
-def mysqlconnect():
-    # Para conectar con la base de datos
-    try:
-        conn = pymysql.connect(
-            host='localhost',
-            user='root',
-            password = "admin",
-            db='boxsa',
-            )
-    except pymysql.MySQLError as e:
-        print("Error de conexion", e)
-        return
-    
-    cur = conn.cursor()
-    
-    # Select query
-    cur.execute("select * from clientes")
-    output = cur.fetchall()
-    
-    for i in output:
-        print(i)
-    
-    menu(cur)
-
-
-
-
-    # Cerrar conexion
-    conn.close()
-    
+            print("No se puede producir el producto solicitado debido a falta de stock.")
 
 # Codigo principal
 if __name__ == "__main__" :
