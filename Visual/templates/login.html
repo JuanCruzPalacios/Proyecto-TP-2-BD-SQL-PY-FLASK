@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de ventas - BoxSA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Ingresa tu marca para iniciar sesion</h1>
+    <form method="POST">
+        <label for="marca">Marca:</label>
+        <input type="text" id="marca" name="marca" required>
+        <button type="submit">Iniciar sesion</button>
+    </form>
+
+    {% if mensaje %}
+        <p class = "alerta" style="margin-top:20px;">{{ mensaje }}</p>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

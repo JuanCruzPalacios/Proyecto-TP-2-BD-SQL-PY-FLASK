@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de ventas - BOXSA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('login') }}">
+    Volver al Login
+    </a>
+    <h1>Sistema de Ventas - {{ marca }} - BOXSA</h1>
+
+    <h2> Productos disponibles: </h2>
+
+    {% if productos %}
+        <ul>
+            {% for producto in productos %}
+                <li>Id: {{producto[0]}} - Detalle: {{producto[1]}} - Precio unitario: ${{producto[2]}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay productos disponibles o ya todos fueron seleccionados.</p>
+    {% endif %}
+
+    <h3>Ingresa el id del producto que desee seleccionar: </h3>
+    <form method="POST">
+        <input type="hidden" name="form_id" value="form_seleccionar_producto">
+        <label for="idProducto">Producto:</label>
+        <input type="text" id="idProducto" name="idProducto" required>
+        <label for="idProducto">Cantidad:</label>
+        <input type="int" id="Cantidad" name="cantidad" required>
+        <button type="submit">Seleccionar</button>
+    </form>
+
+    {% if productosSeleccionados %}
+        <h3> Productos seleccionados: </h3>
+        {% for producto in productosSeleccionados %}
+            <li>Producto: {{producto[0]}} - Cantidad: {{producto[1]}}</li>
+        {% endfor %}
+    {% endif %}
+
+    {% if productosSeleccionados %}
+        <h3> Subtotal: ${{ subtotal }} </h3>
+    {% endif %}
+
+    <form method="POST">
+        <input type="hidden" name="form_id" value="generar_ov">
+        <button type="submit" id ="boton_ov">Generar orden de venta</button>
+    </form>
+
+    {% if mensaje %}
+        <p class = "alerta" style="margin-top:20px;">{{ mensaje }}</p>
+    {% endif %}
+
+</body>
+</html>
