@@ -12,10 +12,27 @@ def menu(cur):
         else:
             print("Ingreso invalido, intente nuevamente")
     
-        
 
-        
+def puedoProducir(cur):
+    validado = False
+    while validado == False:
+        idArt = input("Ingrese el ID del articulo: ")
+        cant = input("Ingrese la cantidad del articulo: ")
+        cur.execute("select idArt from articulos where idArt = %s", (idArt,))
+        output = cur.fetchall()
 
+        if len(output) > 0:
+            cur.execute("select cantidad from stockarticulos where id_articulo = %s", (idArt,))
+            output = cur.fetchall()
+            print(output)
+            validado = True
+        else:
+            print("Ingreso invalido, intente nuevamente")
+    if output >= cant:
+        print("Se puede producir, sobrando ", (output - cant))
+    else:
+        print("No se puede producir")
+    
 
 def mysqlconnect():
     # Para conectar con la base de datos
@@ -40,7 +57,7 @@ def mysqlconnect():
         print(i)
     
     menu(cur)
-    
+
 
 
 
