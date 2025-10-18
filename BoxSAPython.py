@@ -1,4 +1,8 @@
 import pymysql
+import os
+
+def LimpiarConsola():
+    os.system('cls')
 
 def mysqlconnect():
     # Para conectar con la base de datos
@@ -15,7 +19,9 @@ def mysqlconnect():
     
     cur = conn.cursor()
     
-    ElegirProducto(cur, 1)
+    cliente = IngresarCliente(cur)
+    LimpiarConsola()
+    print("Cliente seleccionado:", cliente)
 
     # Cerrar conexion
     conn.close()
@@ -60,6 +66,7 @@ def IngresarCliente(cur):
         output = cur.fetchall()
         if len(output) > 0:
             entrada = True
+            return nombre
         else:
             print("Ingreso invalido, intente nuevamente")
 
