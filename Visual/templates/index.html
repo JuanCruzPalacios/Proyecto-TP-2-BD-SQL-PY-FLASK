@@ -10,7 +10,7 @@
     <a href="{{ url_for('login') }}">
     Volver al Login
     </a>
-    <h1>Sistema de Ventas - {{ marca }} - BOXSA</h1>
+    <h1 class = "titulo">Sistema de Ventas - {{ marca }} - BOXSA</h1>
 
     <h2> Productos disponibles: </h2>
 
@@ -42,7 +42,7 @@
     {% endif %}
 
     {% if productosSeleccionados %}
-        <h3> Subtotal: ${{ subtotal }} </h3>
+        <h3> Subtotal: ${{ subtotalProductos }} </h3>
     {% endif %}
 
     <form method="POST">
@@ -54,5 +54,22 @@
         <p class = "alerta" style="margin-top:20px;">{{ mensaje }}</p>
     {% endif %}
 
+    {% if ordenesVenta %}
+        <h2>Órdenes de Venta Generadas:</h2>
+        <div class = "contenedor-ordenes-venta">
+            {% for orden in ordenesVenta %}
+                    <div class = "orden-venta">
+                    <h1>ID OV: {{ orden[0] }}</h1>
+                    Fecha Orden: {{ orden[2] }} - Fecha Entrega: {{ orden[3] }} <br>
+                    Estado: {{ orden[4] }} <br>
+                    Subtotal: ${{ orden[9] }} <br>
+                    Total: ${{ orden[10] }} <br>
+                    Observaciones: {{orden[11]}}</li>
+                    </div>
+            {% endfor %}
+    {% else %}
+        <p>No se han generado órdenes de venta aún.</p>
+        </div>
+    {% endif %}
 </body>
 </html>

@@ -2,7 +2,7 @@ body {
     background-color:gainsboro;
 }
 
-h1 {
+.titulo{
     text-align: center;
 }
 
@@ -13,4 +13,17 @@ h1 {
 
 .alerta {
     color: red;
+}
+
+.contenedor-ordenes-venta {
+    display: flex;
+}
+
+.orden-venta {
+    display: flex;
+    margin: 30px;
+    background-color: gray;
+    padding: 20px;
+    border-radius: 17px;
+    width: 500px;
 }
