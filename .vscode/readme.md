@@ -1,0 +1,1 @@
+Para iniciar el programa ejecute BOXSAPython.py e ingrese al enlace que se muestra en la consola como Running.
